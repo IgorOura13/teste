@@ -63,20 +63,20 @@ with st.sidebar:
 
     # Display pages
 
-    if page == 'Perform a prediction':
+if page == 'Perform a prediction':
 
-        run_page1()
+     run_page1()
 
-    elif page == 'Add new data':
+elif page == 'Add new data':
         
-        run_page2()
+     run_page2()
 
-    elif page == 'Dashboard':
+elif page == 'Dashboard':
         
-        run_page3()
+     run_page3()
 
-    elif page == 'Informations':
+elif page == 'Informations':
 
-        run_page4()
+     run_page4()
 
 
