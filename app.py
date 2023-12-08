@@ -37,57 +37,29 @@ st.markdown(hide_streamlit_style2, unsafe_allow_html=True)
 
 # Username and Password Authentication
 
-import streamlit_authenticator as stauth
-
-names = st.secrets["names"]
-usernames = st.secrets["usernames"]
-passwords = st.secrets["passwords"]
-
-hashed_passwords = stauth.Hasher(passwords).generate()
-
-col1, col2, col3 = st.columns(3)
-
-with col1:
-          st.write(' ')
-          
-with col2:
-
-          authenticator = stauth.Authenticate(names,usernames,hashed_passwords,
-              'cookie-name','cookie-key', cookie_expiry_days=0)
-
-          name, authentication_status, username = authenticator.login('Login','main')
- 
-
-if st.session_state['authentication_status']:
-    st.sidebar.write("")
-    st.sidebar.write("")
-    st.sidebar.write("")
-    st.sidebar.write("")
-    st.sidebar.write("")
-
-    authenticator.logout('Logout', 'sidebar')
-
-    # Sidebar
-
-    st.sidebar.image("images/unilever-logo.png", use_column_width = 'auto')
-
-    if st.sidebar.checkbox("Display data", False):
-        st.subheader("Data:")
-        st.write(dataframe())
 
 
-    with st.sidebar:
-        page = option_menu(
-            "Menu", ['Perform a prediction', 'Add new data', 'Dashboard', 'Informations'], 
-            icons = ['box-arrow-right', 'plus-circle', 'laptop', 'info-circle'],
-            menu_icon = "house",
-            styles = {
-                "container": {"padding": "0!important", "background-color": "transparent"},
-                #"icon": {"color": "#2962ff"}, 
-                "nav-link": {"font-size": "15px", "text-align": "left", "margin":"0px", "--hover-color": "#a9d4de"},
-                "nav-link-selected": {"font-size": "15px", "font-weight": "normal"},
-            }
-        )
+# Sidebar
+
+st.sidebar.image("images/unilever-logo.png", use_column_width = 'auto')
+
+if st.sidebar.checkbox("Display data", False):
+     st.subheader("Data:")
+     st.write(dataframe())
+
+
+with st.sidebar:
+     page = option_menu(
+          "Menu", ['Perform a prediction', 'Add new data', 'Dashboard', 'Informations'], 
+          icons = ['box-arrow-right', 'plus-circle', 'laptop', 'info-circle'],
+          menu_icon = "house",
+          styles = {
+               "container": {"padding": "0!important", "background-color": "transparent"},
+               #"icon": {"color": "#2962ff"}, 
+               "nav-link": {"font-size": "15px", "text-align": "left", "margin":"0px", "--hover-color": "#a9d4de"},
+               "nav-link-selected": {"font-size": "15px", "font-weight": "normal"},
+          }
+     )
 
     # Display pages
 
@@ -108,20 +80,3 @@ if st.session_state['authentication_status']:
         run_page4()
 
 
-elif st.session_state['authentication_status'] == False:
-
-    col4, col5, col6 = st.columns(3)
-
-    with col4:
-          st.write(' ')
-    with col5:
-          st.error('Username/password is incorrect')
-
-elif st.session_state['authentication_status'] == None:
-
-    col7, col8, col9 = st.columns(3)
-
-    with col7:
-          st.write(' ')
-    with col8:
-          st.warning('Please enter your username and password')
