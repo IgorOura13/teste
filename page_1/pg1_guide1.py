@@ -39,7 +39,7 @@ tests = {
 
 # Columns names for plots
 
-ind = ['Sodium_hydroxide',
+ind = ['Corrente_Agitador_1601',
     'Sodium_carbonate',
     'Water',
     'Fragance',
