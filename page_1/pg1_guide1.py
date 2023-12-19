@@ -63,7 +63,6 @@ ind = ['Corrente Agitador 1601',
     'Dosagem Água',
     'Dosagem Vinagre'
       ]
-
 def run_guide1():
 
     # Data input
@@ -72,60 +71,46 @@ def run_guide1():
 
         if 'predict_pg1_guide1' not in st.session_state:
             st.session_state['predict_pg1_guide1'] = False
-        
+
         with st.form("Inputs1"):
 
             var1, var2 = st.columns(2)
 
-            x1 = var1.text_input("Corrente Agitador:")
-            x2 = var2.text_input("Corrente Bomba:")
+            x1 = var1.selectbox("Active:", actives.keys())
+            x2 = var2.text_input("Corrente Agitador:")
 
             var3, var4 = st.columns(2)
 
-            x3 = var3.text_input("Corrente BB:")
-            x4 = var4.text_input("Potência Bomba:")
+            x3 = var3.text_input("Corrente Bomba:")
+            x4 = var4.text_input("Corrente BB:")
 
             var5, var6 = st.columns(2)
 
-            x5 = var5.text_input("Potência Agitador:")
-            x6 = var6.text_input("Vazão Pasta:")
+            x5 = var5.text_input("Potência Bomba:")
+            x6 = var6.text_input("Potência Agitador:")
 
             var7, var8 = st.columns(2)
 
-            x7 = var7.text_input("Pressão CZ:")
-            x8 = var8.text_input("Temperatura Final:", help = "Unit: ºC")
+            x7 = var7.text_input("Temperatura Holding:")
+            x8 = var8.text_input("Pressão CZ:", help = "Unit: %")
 
             var9, var10 = st.columns(2)
 
-            x9 = var9.text_input("Temperatura Holding",help = "Unit: ºC")
-            x10 = var10.text_input("Temperatura Corpo", help = "Unit: ºC")
+            x9 = var9.selectbox("Dosagem Açúcar:", tests.keys())
+            x10 = var10.text_input("Dosagem Vinagre:", help = "Unit: %")
 
             var11, var12 = st.columns(2)
 
-            x11 = var11.text_input("Temperatura Amostra", help = "Unit: ºC")
-            x12 = var12.text_input("Dosagem Açúcar")
+            x11 = var11.text_input("Dosagem Água:", help = "Unit: min")
+            x12 = var12.text_input("Dosagem Óleo:", help = "Unit: ºC")
 
-            var13, var14 = st.columns(2)
-
-            x13 = var13.text_input("Dosagem Óleo")
-            x14 = var14.text_input("Dosagem Vinagre")
-
-            var15 = st.columns(1)
-
-            x15 = var15.text_input("Vinagre")
-            
-
-            # Corresponding variables with their numbers
             # Corresponding variables with their numbers
 
             x1 = actives[x1]
             x9 = tests[x9]
 
-            submitted = st.form_submit_button("Predict")
-
             def float_values():
-                return [float(x) for x in [x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15]]
-
+                return [float(x) for x in [x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12]]
 
             if submitted:
 
