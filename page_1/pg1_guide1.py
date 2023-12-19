@@ -108,11 +108,11 @@ def run_guide1():
 
             x1 = actives[x1]
             x9 = tests[x9]
-
+            
+            submitted = st.form_submit_button("Predict")
             def float_values():
                 return [float(x) for x in [x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12]]
 
-            submitted = st.form_submit_button("Predict")
 
             if submitted:
 
