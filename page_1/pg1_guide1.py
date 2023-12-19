@@ -77,33 +77,43 @@ def run_guide1():
 
             var1, var2 = st.columns(2)
 
-            x1 = var1.selectbox("Active:", actives.keys())
-            x2 = var2.text_input("Sodium hydroxide:", help = "Unit: %")
+            x1 = var1.selectbox("Corrente Agitador:")
+            x2 = var2.text_input("Corrente Bomba:")
 
             var3, var4 = st.columns(2)
 
-            x3 = var3.text_input("Sodium carbonate:", help = "Unit: %")
-            x4 = var4.text_input("Water:", help = "Unit: %")
+            x3 = var3.text_input("Corrente BB:")
+            x4 = var4.text_input("Potência Bomba:")
 
             var5, var6 = st.columns(2)
 
-            x5 = var5.text_input("Fragance:", help = "Unit: %")
-            x6 = var6.text_input("Blue dye:", help = "Unit: %")
+            x5 = var5.text_input("Potência Agitador:")
+            x6 = var6.text_input("Vazão Pasta:")
 
             var7, var8 = st.columns(2)
 
-            x7 = var7.text_input("Active percentage:", help = "Unit: %")
-            x8 = var8.text_input("Sodium percarbonate:", help = "Unit: %")
+            x7 = var7.text_input("Pressão CZ:")
+            x8 = var8.text_input("Temperatura Final:", help = "Unit: ºC")
 
             var9, var10 = st.columns(2)
 
-            x9 = var9.selectbox("Test:", tests.keys())
-            x10 = var10.text_input("Dosage:", help = "Unit: %")
+            x9 = var9.selectbox("Temperatura Holding",help = "Unit: ºC")
+            x10 = var10.text_input("Temperatura Corpo", help = "Unit: ºC")
 
             var11, var12 = st.columns(2)
 
-            x11 = var11.text_input("Time of contact:", help = "Unit: min")
-            x12 = var12.text_input("Temperature:", help = "Unit: ºC")
+            x11 = var11.text_input("Temperatura Amostra", help = "Unit: ºC")
+            x12 = var12.text_input("Dosagem Açúcar")
+
+            var13, var14 = st.columns(2)
+
+            x13 = var13.text_input("Dosagem Óleo")
+            x14 = var14.text_input("Dosagem Vinagre")
+
+            var15 = st.columns(1)
+
+            x15 = var15.text_input("Vinagre")
+            
 
             # Corresponding variables with their numbers
 
@@ -111,7 +121,7 @@ def run_guide1():
             x9 = tests[x9]
             
             def float_values():
-                return [float(x) for x in [x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12]]
+                return [float(x) for x in [x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15]]
 
             submitted = st.form_submit_button("Predict")
             
