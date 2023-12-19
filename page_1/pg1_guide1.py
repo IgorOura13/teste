@@ -77,7 +77,7 @@ def run_guide1():
 
             var1, var2 = st.columns(2)
 
-            x1 = var1.selectbox("Corrente Agitador:")
+            x1 = var1.text_input("Corrente Agitador:")
             x2 = var2.text_input("Corrente Bomba:")
 
             var3, var4 = st.columns(2)
@@ -97,7 +97,7 @@ def run_guide1():
 
             var9, var10 = st.columns(2)
 
-            x9 = var9.selectbox("Temperatura Holding",help = "Unit: ºC")
+            x9 = var9.text_input("Temperatura Holding",help = "Unit: ºC")
             x10 = var10.text_input("Temperatura Corpo", help = "Unit: ºC")
 
             var11, var12 = st.columns(2)
