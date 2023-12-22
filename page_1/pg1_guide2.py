@@ -22,26 +22,26 @@ ind = ['Corrente Agitador 1601',
     'Corrente Agitador 1603',
     'Corrente Agitador 1604',
     'Corrente Agitador 1605',
+    'Corrente BB 1006',
     'Corrente Bomba 1601',
     'Corrente Bomba 1602',
-    'Corrente BB 1006',
     'Potência Agitador 1605',
     'Potência Bomba 1006',
-    'Vazão Pasta',
+    'Vazão Pasta CV',
     'Pressão CZ 1603',
     'Pressão CZ 1605',
+    'Vazão Pasta PV',
     'Temperatura Final',
     'Temperatura Holding 1633',
     'Temperatura Holding 1634',
-    'Temperatura 1 Corpo',
     'Temperatura 3 Corpo',
+    'Temperatura 1 Corpo',
     'Temperatura Amostra',
     'Dosagem Açúcar',
-    'Dosage Óleo',
-    'Dosagem Água',
+    'Dosage Água',
+    'Dosagem Óleo',
     'Dosagem Vinagre'
       ]
-
 def run_guide2():
     
     # Tutorial on uploading a csv file
