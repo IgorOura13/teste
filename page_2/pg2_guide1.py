@@ -12,28 +12,6 @@ results = {
     1: 'Approved',
 }
 
-actives = {
-    'None': 0,
-    'Sodium Alkyl Benzene Sulfonate': 1,
-    'Benzalkonium Chloride': 2,
-    'Dialkyloxyethyl Hydroxyethyl Methyl Ammonium Methyl Sulphate': 3,
-    'Hydrogen Peroxide': 4,
-    'Sodium hypochlorite': 5,
-    'Ethoxylated Alcohol': 6,
-    'Lactic acid': 7,
-    'Alkyl Dimethyl Benzyl Ammonium Chloride': 8
-}
-
-tests = {
-    'EN1276': 1,
-    'ASTM2274': 2,
-    'EN1040': 3,
-    'Inhibition halo': 4,
-    'OECD202': 5,
-    'EN13697': 6,
-    'EN14561': 7
-}
-
 def run_guide1():
 
     # Data input
