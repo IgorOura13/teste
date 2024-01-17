@@ -6,7 +6,6 @@ from streamlit_option_menu import option_menu
 from machine_learning_algorithm import dataframe
 from page_1.page1 import run_page1
 from page_2.page2 import run_page2
-from page_3.page3 import run_page3
 from page_4.page4 import run_page4
 
 # Website's general configurations
@@ -41,17 +40,18 @@ st.markdown(hide_streamlit_style2, unsafe_allow_html=True)
 
 # Sidebar
 
-st.sidebar.image("images/unilever-logo.png", use_column_width = 'auto')
+
 
 if st.sidebar.checkbox("Display data", False):
      st.subheader("Data:")
-     st.write(dataframe())
+     st.write(dataframe("C:/Users/igorb/Downloads/teste-main/teste-main/data_visc.xlsx"))
+     st.write(dataframe("C:/Users/igorb/Downloads/teste-main/teste-main/data_proc.csv"))
 
 
 with st.sidebar:
      page = option_menu(
-          "Menu", ['Perform a prediction', 'Add new data', 'Dashboard', 'Informations'], 
-          icons = ['box-arrow-right', 'plus-circle', 'laptop', 'info-circle'],
+          "Menu", ['Perform a prediction', 'Add new data', 'Informations'], 
+          icons = ['box-arrow-right', 'plus-circle', 'info-circle'],
           menu_icon = "house",
           styles = {
                "container": {"padding": "0!important", "background-color": "transparent"},
@@ -70,10 +70,6 @@ if page == 'Perform a prediction':
 elif page == 'Add new data':
         
      run_page2()
-
-elif page == 'Dashboard':
-        
-     run_page3()
 
 elif page == 'Informations':
 

@@ -2,88 +2,142 @@
 import pandas as pd
 import numpy as np
 import pickle
-from sklearn.ensemble import RandomForestClassifier
-from imblearn.over_sampling import RandomOverSampler
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.feature_selection import SelectFromModel
+from sklearn.pipeline import Pipeline
 
 # SAVED INFO
-
+visc_path = "C:/Users/igorb/Downloads/teste-main/teste-main/data_visc.xlsx"
+proc_path = "C:/Users/igorb/Downloads/teste-main/teste-main/data_proc.csv"
+model_path = 'C:/Users/igorb/Downloads/teste-main/teste-main/pipeline_model.sav'
 def model():
-    return pickle.load(open('ml_trained_model.sav', 'rb'))
+    return pickle.load(open('C:/Users/igorb/Downloads/teste-main/teste-main/pipeline_model.sav', 'rb'))
 
-def dataframe():
-    return pd.read_csv('data.csv', index_col = False)
+def dataframe(type):
+    if type == proc_path:
+        return pd.read_csv(type, index_col = False)
+    elif type == visc_path:
+        return pd.read_excel(type, index_col = False)
+
 
 # AUTODEPLOY
 
-def check_data(input):
-    old_df = dataframe()
-    new_df = input
+def check_data(input_v, input_p):
+    old_df_v = dataframe(visc_path)
+    old_df_p = dataframe(proc_path)
+    new_df_v = input_v
+    new_df_p = input_p
+    new_dfs = [new_df_v, new_df_p]
+    old_dfs = [old_df_v, old_df_p]
+    
     errors = []
-    if len(old_df.keys()) == len(new_df.keys()):
-        for index, value in enumerate(list(old_df.keys() == new_df.keys())):
-            if value == False:
-                error_type = f"The '{new_df.keys()[index]}' column is either out of order or written incorrectly."
-                errors.append(error_type)
-    else:
-        error_type = "Different number of columns"
-        errors.append(error_type)
+    for i in range(len(new_dfs)):
+        if len(old_dfs[i].keys()) == len(new_dfs[i].keys()):
+            for index, value in enumerate(list(old_dfs[i].keys() == new_dfs[i].keys())):
+                if value == False:
+                    error_type = f"The '{new_dfs[i].keys()[index]}' column is either out of order or written incorrectly."
+                    errors.append(error_type)
+        else:
+            error_type = "Different number of columns"
+            errors.append(error_type)
     if errors != []:
         warning = "The correct columns pattern is:"
         return (errors, warning)
     return True
 
-def new_df(df):
-    old_df = dataframe()
-    new_df = old_df.append(df)
+def new_df(df, type):
+    old_df = dataframe(type)
+    new_df = pd.concat([old_df, df])
     return new_df
+
+def tank(input):
+
+    dados_total = input
+
+    dados_total['TQ SUSPENSÃO'] = dados_total['TQ SUSPENSÃO'].replace({0.5: 1002, 0.0: 1001, 1.0: 1003})
+    dados_total['TQ SUSPENSÃO'] = dados_total['TQ SUSPENSÃO'].map('{:.0f}'.format)
+    dados_total.head()
+    def escolher_valor_acucar(row):
+        if row['TQ SUSPENSÃO'] == '1001':
+            return row['Dosagem_Acucar_TQ1001']
+        elif row['TQ SUSPENSÃO'] == '1002':
+            return row['Dosagem_Acucar_TQ1002']
+        elif row['TQ SUSPENSÃO'] == '1003':
+            return row['Dosagem_Acucar_TQ1003']
+        else:
+            return None
+
+    dados_total['Dosagem_Acucar'] = dados_total.apply(escolher_valor_acucar, axis=1)
+    dados_total = dados_total.drop(columns=['Dosagem_Acucar_TQ1001', 'Dosagem_Acucar_TQ1002', 'Dosagem_Acucar_TQ1003'])
+    def escolher_valor_agua(row):
+        if row['TQ SUSPENSÃO'] == '1001':
+            return row['Dosagem_Agua_TQ1001']
+        elif row['TQ SUSPENSÃO'] == '1002':
+            return row['Dosagem_Agua_TQ1002']
+        elif row['TQ SUSPENSÃO'] == '1003':
+            return row['Dosagem_Agua_TQ1003']
+        else:
+            return None
+
+    dados_total['Dosagem_Agua'] = dados_total.apply(escolher_valor_agua, axis=1)
+    dados_total = dados_total.drop(columns=['Dosagem_Agua_TQ1001', 'Dosagem_Agua_TQ1002', 'Dosagem_Agua_TQ1003'])
+    def escolher_valor_oleo(row):
+        if row['TQ SUSPENSÃO'] == '1001':
+            return row['Dosagem_Oleo_TQ1001']
+        elif row['TQ SUSPENSÃO'] == '1002':
+            return row['Dosagem_Oleo_TQ1002']
+        elif row['TQ SUSPENSÃO'] == '1003':
+            return row['Dosagem_Oleo_TQ1003']
+        else:
+            return None
+
+    dados_total['Dosagem_Oleo'] = dados_total.apply(escolher_valor_oleo, axis=1)
+    dados_total = dados_total.drop(columns=['Dosagem_Oleo_TQ1001', 'Dosagem_Oleo_TQ1002', 'Dosagem_Oleo_TQ1003'])
+    def escolher_valor_vinagre(row):
+        if row['TQ SUSPENSÃO'] == '1001':
+            return row['Dosagem_Vinagre_TQ1001']
+        elif row['TQ SUSPENSÃO'] == '1002':
+            return row['Dosagem_Vinagre_TQ1002']
+        elif row['TQ SUSPENSÃO'] == '1003':
+            return row['Dosagem_Vinagre_TQ1003']
+        else:
+            return None
+
+    dados_total['Dosagem_Vinagre'] = dados_total.apply(escolher_valor_vinagre, axis=1)
+    dados_total = dados_total.drop(columns=['Dosagem_Vinagre_TQ1001', 'Dosagem_Vinagre_TQ1002', 'Dosagem_Vinagre_TQ1003'])
+    return dados_total
 
 def train_model(input):
 
     df = input
     
-    # Differentiating categorical and numerical variables
-
-    Active_column = df.columns[0]
-    Test_column = df.columns[8]
-    Final_Result_column = df.columns[-1]
-
-    dic = {
-    Active_column: 'category',
-    Test_column: 'category',
-    Final_Result_column: 'category'
-    }
-
-    for i in dic.keys():
-        df[i] = df[i].astype("category")
-    for i in df.keys():
-        if i not in dic.keys():
-            df[i] = df[i].astype(float, errors = 'raise')
-
-    # Using one-hot-encoding and dividng data between prediction data and answer
-
-    x = df.drop(Final_Result_column, axis = 1) # Prediction data
-    x = pd.get_dummies(x) # Using one-hot-encoding to turn categorical variables into binary
-    y = df[Final_Result_column] # Real answer
-
-    # Oversampling
-
-    r_over_samp = RandomOverSampler(random_state=0)
-    x_resampled, y_resampled = r_over_samp.fit_resample(x, y)
-
-    x = np.array(x_resampled)
-    y = np.array(y_resampled)
+    X = df.drop(["Data", "TQ SUSPENSÃO", " VEL_5_RPM"], axis=1)
+    y = df[" VEL_5_RPM"]
+    
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     # Machine Learning model
-
-    model = RandomForestClassifier(random_state=42)
-    model.fit(x, y)
+    # Criar o pipeline
+    pipeline = Pipeline([
+        ('feature_selection', SelectFromModel(RandomForestRegressor(random_state=42))),
+        ('regressor', RandomForestRegressor(random_state=42))
+    ])
+    # Treinar o modelo
+    pipeline.fit(X_train, y_train)
 
     # Serializing the model with pickle
 
-    pickle.dump(model, open('ml_trained_model.sav', 'wb'))
-    new_model = open('ml_trained_model.sav', 'rb')
+    pickle.dump(pipeline, open(model_path, 'wb'))
+    new_model = open(model_path, 'rb')
 
     return new_model
 
+def predict(df):
+    input_df = df.drop(["Data", "TQ SUSPENSÃO", " VEL_5_RPM"], axis=1)
+    pipeline = model()
+    predictions = pipeline.predict(input_df)
+    df['Predictions_VEL_5_RPM'] = predictions
+    return df
 # DASHBOARD
 
