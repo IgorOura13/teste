@@ -8,11 +8,11 @@ from sklearn.feature_selection import SelectFromModel
 from sklearn.pipeline import Pipeline
 
 # SAVED INFO
-visc_path = "C:/Users/igorb/Downloads/teste-main/teste-main/data_visc.xlsx"
-proc_path = "C:/Users/igorb/Downloads/teste-main/teste-main/data_proc.csv"
-model_path = 'C:/Users/igorb/Downloads/teste-main/teste-main/pipeline_model.sav'
+visc_path = "data_visc.xlsx"
+proc_path = "data_proc.csv"
+model_path = 'pipeline_model.sav'
 def model():
-    return pickle.load(open('C:/Users/igorb/Downloads/teste-main/teste-main/pipeline_model.sav', 'rb'))
+    return pickle.load(open('pipeline_model.sav', 'rb'))
 
 def dataframe(type):
     if type == proc_path:
