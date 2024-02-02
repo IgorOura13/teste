@@ -114,9 +114,9 @@ def run_guide2():
                     
                     dataframe = run_format_data(dataframe_p, dataframe_v)
                     
-                    dataframe_tank = tank(dataframe)
+                    dataframe = tank(dataframe)
                     
-                    prediction_df = predict(dataframe_tank)
+                    prediction_df = predict(dataframe)
                     
                     float_prediction = prediction_df["Predictions_VEL_5_RPM"]
                     dataframe["Predictions_VEL_5_RPM"] = inv_scale(float_prediction)
