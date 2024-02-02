@@ -5,15 +5,11 @@ import shap
 import warnings
 
 # Internal libraries
-from machine_learning_algorithm import model, predict, tank
-from utils import to_excel, st_shap
-from format_data import run_format_data, inverse_scale
+from machine_learning_algorithm import model, predict, tank, inv_scale
+from utils import to_excel_n, st_shap
+from format_data import run_format_data
+from sklearn.pipeline import Pipeline
 # Dictionaries relating variable's name with its corresponding number
-
-results = {
-    0: 'Disapproved',
-    1: 'Approved',
-}
 
 # Columns names for plots
 
@@ -73,37 +69,61 @@ def run_guide2():
 
         if 'predict_pg1_guide3' not in st.session_state:
             st.session_state['predict_pg1_guide3'] = False
-
+        option_v = st.selectbox('What type of viscosity file?',
+            ('CSV', 'Excel'))
+        
+        option_p = st.selectbox('What type of processes file?',
+            ('CSV', 'Excel'))
+        
         with st.form("Inputs3"):
-
-            uploaded_file_v = st.file_uploader("Choose a file visc:", help = "Please enter a CSV viscosity")
-            file = True
-            if uploaded_file_v is not None: 
-                dataframe_v = pd.read_csv(uploaded_file_v, index_col = False)                  
-                
-            else:
-                file = False
+            if option_v == 'CSV':
+                uploaded_file_v = st.file_uploader("Choose a CSV file for viscosity:", help = "Please enter a CSV viscosity")
+                file = True
+                if uploaded_file_v is not None: 
+                    dataframe_v = pd.read_csv(uploaded_file_v, index_col = False)                  
+                    
+                else:
+                    file = False
+            elif option_v == 'Excel':
+                uploaded_file_v = st.file_uploader("Choose a xlsx file for viscosity:", help = "Please enter a xlsx viscosity")
+                file = True
+                if uploaded_file_v is not None: 
+                    dataframe_v = pd.read_excel(uploaded_file_v, index_col = False)   
             
-            uploaded_file_p = st.file_uploader("Choose a file proc:", help = "Please enter a CSV process file")
-            file = True
-            if uploaded_file_p is not None: 
-                dataframe_p = pd.read_csv(uploaded_file_p, index_col = False)                  
-                
-            else:
-                file = False
+            if option_p == 'CSV':
+                uploaded_file_p = st.file_uploader("Choose a CSV file for processes:", help = "Please enter a CSV processes file")
+                file = True
+                if uploaded_file_p is not None: 
+                    dataframe_p = pd.read_csv(uploaded_file_p, index_col = False)                  
+                    
+                else:
+                    file = False
+            elif option_p == 'Excel':
+                uploaded_file_p = st.file_uploader("Choose a xlsx file for processes:", help = "Please enter a xlsx processes file")
+                file = True
+                if uploaded_file_p is not None: 
+                    dataframe_p = pd.read_excel(uploaded_file_p, index_col = False) 
 
             submitted = st.form_submit_button("Submit files")
+            
 
             if submitted:
                 if file:     
-                    reg = model()
+                    pipeline = model()
+                    reg = pipeline.named_steps['regressor']
+                    
                     dataframe = run_format_data(dataframe_p, dataframe_v)
-                    dataframe = tank(dataframe)
-                    dataframe = predict(dataframe)
-                    dataframe = inverse_scale(dataframe)
-                    dataframe["Predictions_VEL_5_RPM"] = float_prediction
-                    df_xlsx = to_excel(dataframe)
+                    
+                    dataframe_tank = tank(dataframe)
+                    
+                    prediction_df = predict(dataframe_tank)
+                    
+                    float_prediction = prediction_df["Predictions_VEL_5_RPM"]
+                    dataframe["Predictions_VEL_5_RPM"] = inv_scale(float_prediction)
 
+                    
+                    df_xlsx = prediction_df.to_csv(index = False).encode('utf-8')
+                    
                     if 'dataframe' not in st.session_state:
                         st.session_state['dataframe'] = dataframe
                     if 'df_xlsx' not in st.session_state:
@@ -114,52 +134,39 @@ def run_guide2():
                         st.session_state['float_prediction'] = float_prediction
                     if 'reg' not in st.session_state:
                         st.session_state['reg'] = reg
+                    
 
                     st.session_state['download_pg1_guide3'] = True
                     st.session_state['predict_pg1_guide3'] = True
-
+                    
     except (ValueError, IndexError):
         st.warning("Warning: unable to predict, make sure your file is correct")
 
     if submitted:
-        if not file:      
+        if not file:
             st.warning("Warning: no file uploaded")
 
     if st.session_state['predict_pg1_guide3']:
 
         warnings.filterwarnings("ignore")
-
         prediction_df = st.session_state['prediction_df']
         float_prediction = st.session_state['float_prediction']
         reg = st.session_state['reg']
-
-        dic_predictions = {}
-        for el in range(len(prediction_df)):
-            name = f"Prediction {el+1}"
-            dic_predictions[name] = (prediction_df.iloc[[el]], float_prediction[el])
-
-        option = st.selectbox("Choose a prediction:", dic_predictions.keys())
-
-        prediction_df_aux = dic_predictions[option][0]
-        prediction_aux = dic_predictions[option][1]
-
         explainer = shap.TreeExplainer(reg)
-        shap_values = explainer.shap_values(prediction_df_aux)
+        new_pred_df = prediction_df.drop(["Data"], axis = 1)
+        shap_values = explainer.shap_values(new_pred_df)
 
-        prediction_df_aux.columns = ind
-
-        if prediction_aux == 0:
-            st_shap(shap.force_plot(explainer.expected_value[0], shap_values[1][0,:], prediction_df_aux.iloc[0,:]), height = 150)
-        elif prediction_aux == 1:
-            st_shap(shap.force_plot(explainer.expected_value[1], shap_values[1][0,:], prediction_df_aux.iloc[0,:]), height = 150)
+        
+        st_shap(shap.force_plot(explainer.expected_value, shap_values[0, :], new_pred_df.iloc[0, :]), height = 450)
 
     if st.session_state['download_pg1_guide3']:
         dataframe = st.session_state['dataframe']
         df_xlsx = st.session_state['df_xlsx']
-
+        
         st.write("Click the button to download a new file with the prediction results:")
         st.download_button(label = 'Download',
                                         data = df_xlsx,
-                                        file_name = 'prediction_results.xlsx')
+                                        file_name = 'prediction_results.csv')
         st.write("Preview:")
         st.write(dataframe)
+
