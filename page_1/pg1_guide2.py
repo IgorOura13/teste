@@ -6,7 +6,7 @@ import warnings
 
 # Internal libraries
 from machine_learning_algorithm import model, predict, tank, inv_scale
-from utils import to_excel_n, st_shap
+from utils import st_shap
 from format_data import run_format_data
 from sklearn.pipeline import Pipeline
 # Dictionaries relating variable's name with its corresponding number
