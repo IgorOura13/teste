@@ -157,7 +157,6 @@ def run_guide2():
         shap_values = explainer.shap_values(new_pred_df)
 
         
-        shap.initjs()
         force_plot = shap.force_plot(explainer.expected_value, shap_values[0, :], new_pred_df.iloc[0, :], matplotlib=True)
         st.pyplot(force_plot)
 
