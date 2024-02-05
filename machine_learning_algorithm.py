@@ -8,17 +8,15 @@ from sklearn.feature_selection import SelectFromModel
 from sklearn.pipeline import Pipeline
 
 # SAVED INFO
-visc_path = "data_visc.xlsx"
+visc_path = "data_visc.csv"
 proc_path = "data_proc.csv"
 model_path = 'pipeline_model.sav'
 def model():
     return pickle.load(open('pipeline_model.sav', 'rb'))
 
 def dataframe(type):
-    if type == proc_path:
-        return pd.read_csv(type, index_col = False)
-    elif type == visc_path:
-        return pd.read_excel(type, index_col = False)
+    return pd.read_csv(type, index_col = False)
+
 
 def inv_scale(column):
     v = dataframe(visc_path)
