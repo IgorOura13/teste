@@ -157,7 +157,9 @@ def run_guide2():
         shap_values = explainer.shap_values(new_pred_df)
 
         
-        st_shap(shap.force_plot(explainer.expected_value, shap_values[0, :], new_pred_df.iloc[0, :]), height = 450)
+        shap.initjs()
+        force_plot = shap.force_plot(explainer.expected_value, shap_values[0, :], new_pred_df.iloc[0, :], matplotlib=True)
+        st.pyplot(force_plot)
 
     if st.session_state['download_pg1_guide3']:
         dataframe = st.session_state['dataframe']
