@@ -24,7 +24,18 @@ def inv_scale(column):
     df_min = min(v[" VEL_5_RPM"].min(), column.min())
     new_column = column*(df_max - df_min) + df_min
     return new_column
-    
+
+
+def check_and_drop_missing_rows(df):
+    # Check if there are any missing values in the DataFrame
+    if df.isnull().values.any():
+        # If missing values are found, drop rows with missing values
+        df = df.dropna(axis=0)
+        print("Rows with missing values have been dropped.")
+    else:
+        print("No missing values found in the DataFrame.")
+
+    return df
 # AUTODEPLOY
 
 def check_data(input_v, input_p):
