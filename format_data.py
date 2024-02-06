@@ -83,8 +83,12 @@ def run_format_data(dados_processos, dados_viscosidade):
     }
     dados_viscosidade = dados_viscosidade.rename(columns = mapa)
     dados_viscosidade['TQ SUSPENSÃO'] = dados_viscosidade['TQ SUSPENSÃO'].apply(lambda x: ''.join(re.findall(r'\d+', str(x))))
-    if ["VEL_1_RPM", "COZEDOR", "ASPECTO", " ID"] in dados_viscosidade.columns:
-        dados_viscosidade = dados_viscosidade.drop(["VEL_1_RPM", "COZEDOR", "ASPECTO", " ID"], axis=1)
+
+    descartaveis = ["VEL_1_RPM", "COZEDOR", "ASPECTO", " ID"]
+
+    for d in descartaveis:
+        if d in dados_viscosidade.columns:
+            dados_viscosidade = dados_viscosidade.drop(d, axis=1)
 
     pd.set_option('display.max_columns', None)
 
