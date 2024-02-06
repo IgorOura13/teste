@@ -161,7 +161,8 @@ def run_guide2():
         
         force_plot = shap.force_plot(explainer.expected_value, shap_values_selected, new_pred_df.iloc[0, selected_feature_indices], matplotlib = True)
         st.pyplot(force_plot)
-        shap.plots.beeswarm(shap_values, max_display=20)
+        beeswarm = shap.plots.beeswarm(shap_values, max_display=20, matplotlib = True)
+        st.pyplot(beewsarm)
     if st.session_state['download_pg1_guide3']:
         dataframe = st.session_state['dataframe']
         df_xlsx = st.session_state['df_xlsx']
