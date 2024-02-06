@@ -3,7 +3,7 @@ import pandas as pd
 import streamlit as st
 
 # Internal libraries
-from machine_learning_algorithm import check_data, new_df, train_model, tank, model_path, visc_path, proc_path
+from machine_learning_algorithm import check_data, new_df, train_model, tank, model_path, visc_path, proc_path, dataframe
 from format_data import run_format_data
 
 # Dictionaries relating variable's name with its corresponding number
