@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.feature_selection import SelectFromModel
 from sklearn.pipeline import Pipeline
+import sklearn
 
 # SAVED INFO
 visc_path = "data_visc.csv"
