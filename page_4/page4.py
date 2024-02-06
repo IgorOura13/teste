@@ -25,5 +25,7 @@ def run_page4():
 
     with c1:
         st.write(" ")
+    with c2:
+        st.image("images/Logo_Quanta.png", use_column_width = 'auto')
                     
     
