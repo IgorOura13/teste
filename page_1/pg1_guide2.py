@@ -154,9 +154,13 @@ def run_guide2():
         explainer = shap.TreeExplainer(reg)
         new_pred_df = prediction_df.drop(["Data"], axis = 1)
         shap_values = explainer.shap_values(new_pred_df)
-
+        feature_importances = reg.feature_importances_
+        sorted_feature_indices = feature_importances.argsort()[::-1]
+        n_top_features = 5
+        selected_feature_indices = sorted_feature_indices[:n_top_features]
+        shap_values_selected = shap_values[0, selected_feature_indices]
         
-        force_plot = shap.force_plot(explainer.expected_value, shap_values[0, :], new_pred_df.iloc[0, :], matplotlib=True)
+        force_plot = shap.force_plot(explainer.expected_value, shap_values_selected, X.iloc[0, selected_feature_indices], matplotlib = True)
         st.pyplot(force_plot)
 
     if st.session_state['download_pg1_guide3']:
