@@ -3,7 +3,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 # Internal libraries
-from machine_learning_algorithm import dataframe
+from machine_learning_algorithm import dataframe, visc_path, proc_path
 from page_1.page1 import run_page1
 from page_2.page2 import run_page2
 from page_4.page4 import run_page4
@@ -43,10 +43,10 @@ st.sidebar.image("images/unilever-logo.png", use_column_width = 'auto')
 
 
 if st.sidebar.checkbox("Display data", False):
-     st.subheader("Data:")
-     st.write(dataframe("C:/Users/igorb/Downloads/teste-main/teste-main/data_visc.xlsx"))
-     st.write(dataframe("C:/Users/igorb/Downloads/teste-main/teste-main/data_proc.csv"))
-
+     st.subheader("Viscosity data:")
+     st.write(dataframe(visc_path))
+     st.subheader("Processes data:")
+     st.write(dataframe(proc_path))
 
 with st.sidebar:
      page = option_menu(
