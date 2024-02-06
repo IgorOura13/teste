@@ -49,6 +49,10 @@ def run_guide2():
         ''')
         st.markdown("---")
         st.write("Follow the example below, your spreadsheet must match up to this model for each spreadsheet:")
+        t.subheader("Viscosity data:")
+        st.write(dataframe(visc_path))
+        st.subheader("Processes data:")
+        st.write(dataframe(proc_path))
         st.markdown("---")
         st.write("After that, download your CSV or xlsx file")
         
