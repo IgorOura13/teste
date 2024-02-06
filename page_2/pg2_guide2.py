@@ -27,7 +27,7 @@ def run_guide2():
         
         st.markdown("---")
         st.write("Finally, click the 'Browse files' button to upload your file:")
-        
+        st.image("images/tutorial-pg2-foto3.png")
         st.markdown("---")
         st.write("That's it! Now you can add new data!")
         
