@@ -5,7 +5,7 @@ import shap
 import warnings
 import sklearn
 # Internal libraries
-from machine_learning_algorithm import model, predict, tank, inv_scale, check_and_drop_missing_rows, dataframe, visc_path, proc_path
+from machine_learning_algorithm import model, predict, tank, inv_scale, check_and_drop_missing_rows, dataframe
 from utils import st_shap
 from format_data import run_format_data
 from sklearn.pipeline import Pipeline
@@ -49,10 +49,10 @@ def run_guide2():
         ''')
         st.markdown("---")
         st.write("Follow the example below, your spreadsheet must match up to this model for each spreadsheet:")
-        st.subheader("Viscosity data:")
-        st.write(dataframe(visc_path))
-        st.subheader("Processes data:")
-        st.write(dataframe(proc_path))
+        st.subheader("Viscosity data example:")
+        st.write(dataframe(for_display/display_visc.csv))
+        st.subheader("Processes data example:")
+        st.write(dataframe(for_display/display_proc.csv))
         st.markdown("---")
         st.write("After that, download your CSV or xlsx file")
         
