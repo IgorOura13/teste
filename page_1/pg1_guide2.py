@@ -39,7 +39,6 @@ ind = ['Corrente Agitador 1601',
     'Dosagem Vinagre'
       ]
 def run_guide2():
-    print(sklearn.__version__)
     # Tutorial on uploading a csv file
 
     with st.expander("TUTORIAL"):
