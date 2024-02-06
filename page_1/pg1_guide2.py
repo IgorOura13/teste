@@ -103,7 +103,7 @@ def run_guide2():
                 if uploaded_file_p is not None: 
                     dataframe_p = pd.read_excel(uploaded_file_p, index_col = False) 
 
-            submitted = st.form_submit_button("Submit files")
+            submitted = st.form_submit_button("Predict")
             
 
             if submitted:
