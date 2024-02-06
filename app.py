@@ -39,7 +39,7 @@ st.markdown(hide_streamlit_style2, unsafe_allow_html=True)
 
 
 # Sidebar
-
+st.sidebar.image("images/unilever-logo.png", use_column_width = 'auto')
 
 
 if st.sidebar.checkbox("Display data", False):
