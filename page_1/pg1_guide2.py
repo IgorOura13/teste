@@ -3,7 +3,7 @@ import pandas as pd
 import streamlit as st
 import shap
 import warnings
-
+import sklearn
 # Internal libraries
 from machine_learning_algorithm import model, predict, tank, inv_scale, check_and_drop_missing_rows
 from utils import st_shap
