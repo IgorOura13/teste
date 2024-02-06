@@ -5,7 +5,7 @@ import shap
 import warnings
 
 # Internal libraries
-from machine_learning_algorithm import model, predict, tank, inv_scale
+from machine_learning_algorithm import model, predict, tank, inv_scale, check_and_drop_missing_rows
 from utils import st_shap
 from format_data import run_format_data
 from sklearn.pipeline import Pipeline
@@ -115,7 +115,7 @@ def run_guide2():
                     dataframe = run_format_data(dataframe_p, dataframe_v)
                     
                     dataframe = tank(dataframe)
-                    
+                    dataframe = check_and_drop_missing_rows(dataframe)
                     prediction_df = predict(dataframe)
                     
                     float_prediction = prediction_df["Predictions_VEL_5_RPM"]
