@@ -22,9 +22,9 @@ def run_guide2():
         st.markdown("---")
         st.write("Follow the example below, your spreadsheet must match up to this model for each spreadsheet:")
         st.subheader("Viscosity data example:")
-        st.write(dataframe(teste/for_display/display_visc.csv))
+        st.write(dataframe('for_display/display_visc.csv'))
         st.subheader("Processes data example:")
-        st.write(dataframe(teste/for_display/display_proc.csv))
+        st.write(dataframe('for_display/display_proc.csv'))
         
         st.markdown("---")
         st.write("After that, download your CSV or xlsx file")
