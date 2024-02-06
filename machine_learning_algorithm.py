@@ -151,7 +151,7 @@ def train_model(input):
 def predict(df):
     input_df = df.drop(["Data", "TQ SUSPENSÃO", " VEL_5_RPM"], axis=1)
     pipeline = model()
-
+    print(sklearn.__version__)
     predictions = pipeline.predict(input_df)
     df['Predictions_VEL_5_RPM'] = predictions
     return df
