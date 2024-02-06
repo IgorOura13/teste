@@ -116,7 +116,6 @@ def run_guide2():
                     
                     dataframe = tank(dataframe)
                     dataframe = check_and_drop_missing_rows(dataframe)
-                    print(dataframe)
                     prediction_df = predict(dataframe)
                     
                     float_prediction = prediction_df["Predictions_VEL_5_RPM"]
