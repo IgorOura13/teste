@@ -5,7 +5,7 @@ import shap
 import warnings
 import sklearn
 # Internal libraries
-from machine_learning_algorithm import model, predict, tank, inv_scale, check_and_drop_missing_rows
+from machine_learning_algorithm import model, predict, tank, inv_scale, check_and_drop_missing_rows, dataframe, visc_path, proc_path
 from utils import st_shap
 from format_data import run_format_data
 from sklearn.pipeline import Pipeline
