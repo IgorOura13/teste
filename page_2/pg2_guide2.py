@@ -3,7 +3,7 @@ import pandas as pd
 import streamlit as st
 
 # Internal libraries
-from machine_learning_algorithm import check_data, new_df, train_model, tank, model_path, visc_path, proc_path, dataframe
+from machine_learning_algorithm import check_data, new_df, train_model, tank, model_path, dataframe
 from format_data import run_format_data
 
 # Dictionaries relating variable's name with its corresponding number
@@ -21,10 +21,10 @@ def run_guide2():
         ''')
         st.markdown("---")
         st.write("Follow the example below, your spreadsheet must match up to this model for each spreadsheet:")
-        st.subheader("Viscosity data:")
-        st.write(dataframe(visc_path))
-        st.subheader("Processes data:")
-        st.write(dataframe(proc_path))
+        st.subheader("Viscosity data example:")
+        st.write(dataframe(for_display/display_visc.csv))
+        st.subheader("Processes data example:")
+        st.write(dataframe(for_display/display_proc.csv))
         
         st.markdown("---")
         st.write("After that, download your CSV or xlsx file")
