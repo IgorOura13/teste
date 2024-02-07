@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import csv
 
 scaler = MinMaxScaler(feature_range=(0, 1))
-def run_format_data(dados_processos, dados_viscosidade):
+def run_format_data(dados_processos, dados_viscosidade, scaled = True):
     #Format time values
     def clean_and_format_time(time_str):
         time_str = str(time_str)
@@ -96,21 +96,21 @@ def run_format_data(dados_processos, dados_viscosidade):
     dados_viscosidade['Data'] = pd.to_datetime(dados_viscosidade['Data'], utc = True)
 
 
-    lista_variaveisformat = ['Dosagem_Acucar_TQ1001', 'Dosagem_Acucar_TQ1002', 'Potencia_Agitador_1605', 'Potencia_Bomba_1006',
-                    'Dosagem_Agua_TQ1001', 'Dosagem_Agua_TQ1002', 'Dosagem_Agua_TQ1003', 'Dosagem_Vinagre_TQ1001',
-                    'Dosagem_Vinagre_TQ1002', 'Dosagem_Vinagre_TQ1003', 'Vazao_Pasta_PV', 'Temp_Final', 'Temperatura_3_Corpo', 'Temperatura_1_Corpo',
-                    'Dosagem_Acucar_TQ1003','Dosagem_Oleo_TQ1001', 'Dosagem_Oleo_TQ1002', 'Dosagem_Oleo_TQ1003',
-                    'Pressao_CZ_1603', 'Pressao_CZ_1605', 'Vazao_Pasta_CV', 'Temp_Holding_1633', 'Temp_Holding_1634',
-                    'Corrente_Agitador_1601', 'Corrente_Agitador_1602', 'Corrente_Agitador_1603', 'Corrente_Agitador_1604',
-                    'Corrente_Agitador_1605', 'Corrente_BB_1006', 'Corrente_Bomba_1601', 'Corrente_Bomba_1602']
+    if scaled:
+        lista_variaveisformat = ['Dosagem_Acucar_TQ1001', 'Dosagem_Acucar_TQ1002', 'Potencia_Agitador_1605', 'Potencia_Bomba_1006',
+                        'Dosagem_Agua_TQ1001', 'Dosagem_Agua_TQ1002', 'Dosagem_Agua_TQ1003', 'Dosagem_Vinagre_TQ1001',
+                        'Dosagem_Vinagre_TQ1002', 'Dosagem_Vinagre_TQ1003', 'Vazao_Pasta_PV', 'Temp_Final', 'Temperatura_3_Corpo', 'Temperatura_1_Corpo',
+                        'Dosagem_Acucar_TQ1003','Dosagem_Oleo_TQ1001', 'Dosagem_Oleo_TQ1002', 'Dosagem_Oleo_TQ1003',
+                        'Pressao_CZ_1603', 'Pressao_CZ_1605', 'Vazao_Pasta_CV', 'Temp_Holding_1633', 'Temp_Holding_1634',
+                        'Corrente_Agitador_1601', 'Corrente_Agitador_1602', 'Corrente_Agitador_1603', 'Corrente_Agitador_1604',
+                        'Corrente_Agitador_1605', 'Corrente_BB_1006', 'Corrente_Bomba_1601', 'Corrente_Bomba_1602']
 
-    for var in lista_variaveisformat:
-        dados_processos[var] = dados_processos[var].apply(format_value1)
+        for var in lista_variaveisformat:
+            dados_processos[var] = dados_processos[var].apply(format_value1)
 
-    dados_processos.iloc[0:, 1:]=scaler.fit_transform(dados_processos.iloc[0:, 1:].to_numpy())
-    dados_viscosidade['TQ SUSPENSÃO'] = pd.to_numeric(dados_viscosidade['TQ SUSPENSÃO'], errors='coerce')
-    dados_viscosidade[['TQ SUSPENSÃO',' TEMP AMOSTRA C°']]=scaler.fit_transform(dados_viscosidade[['TQ SUSPENSÃO',' TEMP AMOSTRA C°']].to_numpy())
-    if ' VEL_5_RPM' in dados_viscosidade.columns:
+        dados_processos.iloc[0:, 1:]=scaler.fit_transform(dados_processos.iloc[0:, 1:].to_numpy())
+        dados_viscosidade['TQ SUSPENSÃO'] = pd.to_numeric(dados_viscosidade['TQ SUSPENSÃO'], errors='coerce')
+        dados_viscosidade[['TQ SUSPENSÃO',' TEMP AMOSTRA C°']]=scaler.fit_transform(dados_viscosidade[['TQ SUSPENSÃO',' TEMP AMOSTRA C°']].to_numpy())
         dados_viscosidade[[' VEL_5_RPM']]=scaler.fit_transform(dados_viscosidade[[' VEL_5_RPM']].to_numpy())
 
     # Adicione 4 minutos a cada valor na coluna 'DataHora'
