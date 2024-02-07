@@ -121,15 +121,15 @@ def run_guide2():
                                         data = new_model, 
                                         file_name = 'pipeline_model.sav')
             new_df_csv_v = st.session_state['new_df_csvv_pg2_guide3']
-            st.download_button(label = 'Download new data',
+            st.download_button(label = 'Download new viscosity data',
                                         data = new_df_csv_v, 
                                         file_name = 'data_visc.csv')
             new_df_csv_p = st.session_state['new_df_csvp_pg2_guide3']
-            st.download_button(label = 'Download new data',
+            st.download_button(label = 'Download new processes data',
                                         data = new_df_csv_p, 
                                         file_name = 'data_proc.csv')
 
-            st.info("New model and new data must be uploaded to github. Check the tutorial to see how.")
+            st.info("New model and new data must be uploaded to github.")
         
         if submitted:
             if not file_p and not file_v:      
