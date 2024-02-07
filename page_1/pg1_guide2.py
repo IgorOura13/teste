@@ -157,7 +157,7 @@ def run_guide2():
         prediction_df = st.session_state['prediction_df']
         float_prediction = st.session_state['float_prediction']
         reg = st.session_state['reg']
-        shap.plots.initjs()
+
         explainer = shap.TreeExplainer(reg)
         new_pred_df = prediction_df.drop(["Data"], axis = 1)
         shap_values = explainer.shap_values(new_pred_df)
