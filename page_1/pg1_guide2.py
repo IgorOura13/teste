@@ -129,7 +129,7 @@ def run_guide2():
                     dataframe["Predictions_VEL_5_RPM"] = inv_scale(float_prediction)
                     o_dataframe["Predictions_VEL_5_RPM"] = inv_scale(float_prediction)
                     
-                    df_xlsx = prediction_df.to_csv(index = False).encode('utf-8')
+                    df_xlsx = o_dataframe.to_csv(index = False).encode('utf-8')
                     
                     if 'dataframe' not in st.session_state:
                         st.session_state['dataframe'] = o_dataframe
