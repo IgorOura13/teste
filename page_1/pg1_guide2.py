@@ -10,7 +10,7 @@ from utils import st_shap
 from format_data import run_format_data
 from sklearn.pipeline import Pipeline
 import matplotlib.pyplot as plt
-from sklearn.metrics import mean_squared_error
+
 # Dictionaries relating variable's name with its corresponding number
 
 # Columns names for plots
@@ -175,8 +175,7 @@ def run_guide2():
             ax.set_ylabel('Predito')
             ax.set_title('Valores Reais vs. Preditos')
             st.pyplot(fig)
-            mse = mean_squared_error(o_dataframe[" VEL_5_RPM"], o_dataframe["Predictions_VEL_5_RPM"])
-            st.write(f'Mean Squared Error: {mse:.2f}')
+            
             
     if st.session_state['download_pg1_guide3']:
         o_dataframe = st.session_state['dataframe']
