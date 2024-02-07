@@ -155,8 +155,11 @@ def train_model(input):
 
     return new_model
 
-def predict(df):
-    input_df = df.drop(["Data", "TQ SUSPENSÃO", " VEL_5_RPM"], axis=1)
+def predict(df, real):
+    if real:
+        input_df = df.drop(["Data", "TQ SUSPENSÃO", " VEL_5_RPM"], axis=1)
+    else:
+        input_df = df.drop(["Data", "TQ SUSPENSÃO"], axis=1)
     pipeline = model()
     predictions = pipeline.predict(input_df)
     df['Predictions_VEL_5_RPM'] = predictions
