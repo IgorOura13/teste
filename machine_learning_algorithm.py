@@ -150,9 +150,7 @@ def train_model(input):
     return new_model
 
 def predict(df):
-    if " VEL_5_RPM" in df.columns:
-        df.drop(" VEL_5_RPM", axis=1)
-    input_df = df.drop(["Data", "TQ SUSPENSÃO"], axis=1)
+    input_df = df.drop(["Data", "TQ SUSPENSÃO", " VEL_5_RPM"], axis=1)
     pipeline = model()
     predictions = pipeline.predict(input_df)
     df['Predictions_VEL_5_RPM'] = predictions
