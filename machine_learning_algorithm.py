@@ -49,15 +49,18 @@ def check_data(input_v, input_p):
     
     errors = []
     for i in range(len(new_dfs)):
-        if len(old_dfs[i].keys()) == len(new_dfs[i].keys()):
-            for index, value in enumerate(list(old_dfs[i].keys() == new_dfs[i].keys())):
-                if value == False:
-                    error_type = f"The '{new_dfs[i].keys()[index]}' column is either out of order or written incorrectly."
-                    errors.append(error_type)
-        else:
-            error_type = "Different number of columns"
-            errors.append(error_type)
+        print("before check") 
+        if new_dfs[i] is not None:
+            if len(old_dfs[i].keys()) == len(new_dfs[i].keys()):
+                for index, value in enumerate(list(old_dfs[i].keys() == new_dfs[i].keys())):
+                    if value == False:
+                        error_type = f"The '{new_dfs[i].keys()[index]}' column is either out of order or written incorrectly."
+                        errors.append(error_type)
+            else:
+                error_type = "Different number of columns"
+                errors.append(error_type)
     if errors != []:
+        print(errors)
         warning = "The correct columns pattern is:"
         return (errors, warning)
     return True
