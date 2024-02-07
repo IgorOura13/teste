@@ -120,6 +120,8 @@ def run_guide2():
                     if " VEL_5_RPM" in dataframe.columns:
                         
                         real = True
+                    else:
+                        real = False
                     
                     prediction_df = predict(dataframe, real)
                     
