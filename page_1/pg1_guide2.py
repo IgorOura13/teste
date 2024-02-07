@@ -157,16 +157,13 @@ def run_guide2():
         prediction_df = st.session_state['prediction_df']
         float_prediction = st.session_state['float_prediction']
         reg = st.session_state['reg']
+        shap.plots.initjs()
         explainer = shap.TreeExplainer(reg)
         new_pred_df = prediction_df.drop(["Data"], axis = 1)
         shap_values = explainer.shap_values(new_pred_df)
-        feature_importances = reg.feature_importances_
-        sorted_feature_indices = feature_importances.argsort()[::-1]
-        n_top_features = 5
-        selected_feature_indices = sorted_feature_indices[:n_top_features]
-        shap_values_selected = shap_values[0, selected_feature_indices]
-        
-        force_plot = shap.force_plot(explainer.expected_value, shap_values_selected, new_pred_df.iloc[0, selected_feature_indices], matplotlib = True)
+        instance_index = st.selectbox('Select Instance Index', range(len(new_pred_df)))
+        shap.initjs()
+        force_plot = shap.force_plot(explainer.expected_value, shap_values[instance_index, :], new_pred_df.iloc[instance_index, :], matplotlib=True)
         st.pyplot(force_plot)
         if real:
             fig, ax = plt.subplots(figsize=(10, 6))
