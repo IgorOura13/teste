@@ -110,11 +110,13 @@ def run_guide2():
                 if file:     
                     pipeline = model()
                     reg = pipeline.named_steps['regressor']
-                    
+
+                    print("data format")
                     dataframe = run_format_data(dataframe_p, dataframe_v)
                     
                     dataframe = tank(dataframe)
                     dataframe = check_and_drop_missing_rows(dataframe)
+                    print("predict")
                     prediction_df = predict(dataframe)
                     
                     float_prediction = prediction_df["Predictions_VEL_5_RPM"]
