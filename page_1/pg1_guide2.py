@@ -9,6 +9,8 @@ from machine_learning_algorithm import model, predict, tank, inv_scale, check_an
 from utils import st_shap
 from format_data import run_format_data
 from sklearn.pipeline import Pipeline
+import matplotlib.pyplot as plt
+from sklearn.metrics import mean_squared_error
 # Dictionaries relating variable's name with its corresponding number
 
 # Columns names for plots
@@ -110,21 +112,25 @@ def run_guide2():
                 if file:     
                     pipeline = model()
                     reg = pipeline.named_steps['regressor']
-
+                    o_dataframe = run_format_data(dataframe_p, dataframe_v, scaled = False)
                     dataframe = run_format_data(dataframe_p, dataframe_v)
                     
                     dataframe = tank(dataframe)
                     dataframe = check_and_drop_missing_rows(dataframe)
-                    prediction_df = predict(dataframe)
+                    if " VEL_5_RPM" in dataframe.columns:
+                        
+                        real = True
+                    
+                    prediction_df = predict(dataframe, real)
                     
                     float_prediction = prediction_df["Predictions_VEL_5_RPM"]
                     dataframe["Predictions_VEL_5_RPM"] = inv_scale(float_prediction)
-
+                    o_dataframe["Predictions_VEL_5_RPM"] = inv_scale(float_prediction)
                     
                     df_xlsx = prediction_df.to_csv(index = False).encode('utf-8')
                     
                     if 'dataframe' not in st.session_state:
-                        st.session_state['dataframe'] = dataframe
+                        st.session_state['dataframe'] = o_dataframe
                     if 'df_xlsx' not in st.session_state:
                         st.session_state['df_xlsx'] = df_xlsx
                     if 'prediction_df' not in st.session_state:
@@ -162,8 +168,21 @@ def run_guide2():
         
         force_plot = shap.force_plot(explainer.expected_value, shap_values_selected, new_pred_df.iloc[0, selected_feature_indices], matplotlib = True)
         st.pyplot(force_plot)
+        if real:
+            fig, ax = plt.subplots(figsize=(10, 6))
+            ax.scatter(o_dataframe[" VEL_5_RPM"], o_dataframe["Predictions_VEL_5_RPM"], color='blue')
+            ax.plot([o_dataframe[" VEL_5_RPM"].min(), o_dataframe[" VEL_5_RPM"].max()],
+                    [o_dataframe[" VEL_5_RPM"].min(), o_dataframe[" VEL_5_RPM"].max()],
+                    linestyle='--', color='red')  # Adiciona a linha de referência para comparação
+            ax.set_xlabel('Real')
+            ax.set_ylabel('Predito')
+            ax.set_title('Valores Reais vs. Preditos')
+            st.pyplot(fig)
+            mse = mean_squared_error(o_dataframe[" VEL_5_RPM"], o_dataframe["Predictions_VEL_5_RPM"])
+            st.write(f'Mean Squared Error: {mse:.2f}')
+            
     if st.session_state['download_pg1_guide3']:
-        dataframe = st.session_state['dataframe']
+        o_dataframe = st.session_state['dataframe']
         df_xlsx = st.session_state['df_xlsx']
         
         st.write("Click the button to download a new file with the prediction results:")
@@ -171,5 +190,5 @@ def run_guide2():
                                         data = df_xlsx,
                                         file_name = 'prediction_results.csv')
         st.write("Preview:")
-        st.write(dataframe)
+        st.write(o_dataframe)
 
