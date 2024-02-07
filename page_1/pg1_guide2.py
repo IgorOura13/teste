@@ -162,7 +162,7 @@ def run_guide2():
         new_pred_df = prediction_df.drop(["Data"], axis = 1)
         shap_values = explainer.shap_values(new_pred_df)
         instance_index = st.selectbox('Select Instance Index', range(len(new_pred_df)))
-        shap.initjs()
+        
         force_plot = shap.force_plot(explainer.expected_value, shap_values[instance_index, :], new_pred_df.iloc[instance_index, :], matplotlib=True)
         st.pyplot(force_plot)
         if real:
