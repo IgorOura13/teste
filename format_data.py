@@ -111,8 +111,9 @@ def run_format_data(dados_processos, dados_viscosidade, scaled = True):
         dados_processos.iloc[0:, 1:]=scaler.fit_transform(dados_processos.iloc[0:, 1:].to_numpy())
         dados_viscosidade['TQ SUSPENSÃO'] = pd.to_numeric(dados_viscosidade['TQ SUSPENSÃO'], errors='coerce')
         dados_viscosidade[['TQ SUSPENSÃO',' TEMP AMOSTRA C°']]=scaler.fit_transform(dados_viscosidade[['TQ SUSPENSÃO',' TEMP AMOSTRA C°']].to_numpy())
-        dados_viscosidade[[' VEL_5_RPM']]=scaler.fit_transform(dados_viscosidade[[' VEL_5_RPM']].to_numpy())
-
+        
+        if ' VEL_5_RPM' in dados_viscosidade.columns:
+            dados_viscosidade[[' VEL_5_RPM']]=scaler.fit_transform(dados_viscosidade[[' VEL_5_RPM']].to_numpy())
     # Adicione 4 minutos a cada valor na coluna 'DataHora'
     dados_processos['Data'] = dados_processos['Data'] + pd.Timedelta(minutes=4)
 
