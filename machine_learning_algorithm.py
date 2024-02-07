@@ -67,7 +67,10 @@ def check_data(input_v, input_p):
 
 def new_df(df, type):
     old_df = dataframe(type)
-    new_df = pd.concat([old_df, df])
+    if df is not None:
+        new_df = pd.concat([old_df, df])
+    else:
+        new_df = old_df
     return new_df
 
 def tank(input):
