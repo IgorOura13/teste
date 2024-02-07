@@ -50,42 +50,48 @@ def run_guide2():
         with st.form("Inputs3"):
             if option_v == 'CSV':
                 uploaded_file_v = st.file_uploader("Upload CSV viscosity spreadsheet:", help = "Please enter a CSV file")
-                file = True
+                file_v = True
                 if uploaded_file_v is not None: 
                     added_df_v = pd.read_csv(uploaded_file_v, index_col = False)                  
                 else:
-                    file = False
+                    file_v = False
+                    added_df_v = None
             elif option_v == 'Excel':
                 uploaded_file_v = st.file_uploader("Upload xlsx viscosity spreadsheet:", help = "Please enter a xlsx file")
-                file = True
+                file_v = True
                 if uploaded_file_v is not None: 
                     added_df_v = pd.read_excel(uploaded_file_v, index_col = False)                  
                 else:
-                    file = False
+                    file_v = False
+                    added_df_v = None
             if option_p == 'CSV':
                 uploaded_file_p = st.file_uploader("Upload processes spreadsheet:", help = "Please enter a CSV file")
-                file = True
+                file_p = True
                 if uploaded_file_p is not None: 
                     added_df_p = pd.read_csv(uploaded_file_p, index_col = False)                  
                 else:
-                    file = False
+                    file_p = False
+                    added_df_p = None
             elif option_p == 'Excel':
                 uploaded_file_p = st.file_uploader("Upload xlsx processes spreadsheet:", help = "Please enter a xlsx file")
-                file = True
+                file_p = True
                 if uploaded_file_p is not None: 
                     added_df_p = pd.read_excel(uploaded_file_p, index_col = False)                  
                 else:
-                    file = False
+                    file_p = False
+                    added_df_p = None
 
             submitted = st.form_submit_button("Add data")
 
             if submitted:
-                if file:
-                    with st.spinner("Training new model..."):    
+                if file_p or file_v:
+                    with st.spinner("Training new model..."):   
                         run_autodeploy = check_data(added_df_v, added_df_p)
                         if run_autodeploy == True:
                             new_updated_df_v = new_df(added_df_v, visc_path)
+                            print("1")
                             new_updated_df_p = new_df(added_df_p, proc_path)
+                            print("2")
                             new_updated_df = run_format_data(new_updated_df_p, new_updated_df_v)
 
                             new_df_csv = new_updated_df.to_csv(index = False).encode('utf-8')
@@ -115,18 +121,18 @@ def run_guide2():
                                         data = new_model, 
                                         file_name = 'pipeline_model.sav')
             new_df_csv_v = st.session_state['new_df_csvv_pg2_guide3']
-            st.download_button(label = 'Download new viscosity data',
+            st.download_button(label = 'Download new data',
                                         data = new_df_csv_v, 
                                         file_name = 'data_visc.csv')
             new_df_csv_p = st.session_state['new_df_csvp_pg2_guide3']
-            st.download_button(label = 'Download new processes data',
+            st.download_button(label = 'Download new data',
                                         data = new_df_csv_p, 
                                         file_name = 'data_proc.csv')
 
             st.info("New model and new data must be uploaded to github. Check the tutorial to see how.")
         
         if submitted:
-            if not file:      
+            if not file_p and not file_v:      
                 st.warning("Warning: no file uploaded")
                 
     except (ValueError, UnboundLocalError):
