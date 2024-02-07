@@ -21,8 +21,8 @@ def dataframe(type):
 
 def inv_scale(column):
     v = dataframe(visc_path)
-    df_max = max(v[" VEL_5_RPM"].max(), column.max())
-    df_min = min(v[" VEL_5_RPM"].min(), column.min())
+    df_max = v[" VEL_5_RPM"].max()
+    df_min = v[" VEL_5_RPM"].min()
     new_column = column*(df_max - df_min) + df_min
     return new_column
 
