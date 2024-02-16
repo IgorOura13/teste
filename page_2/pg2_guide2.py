@@ -134,5 +134,6 @@ def run_guide2():
             if not file_p and not file_v:      
                 st.warning("Warning: no file uploaded")
                 
-    except (ValueError, UnboundLocalError):
+    except (ValueError, UnboundLocalError) as e:
         st.warning("Warning: unable to predict, make sure your file is correct")
+        st.error(f"Error: {e}")
