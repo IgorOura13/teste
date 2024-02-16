@@ -146,8 +146,10 @@ def run_guide2():
                     st.session_state['download_pg1_guide3'] = True
                     st.session_state['predict_pg1_guide3'] = True
                     
-    except (ValueError, IndexError):
+    except (ValueError, IndexError) as e:
         st.warning("Warning: unable to predict, make sure your file is correct")
+        st.error(f"Error: {e}")
+        
 
     if submitted:
         if not file:
