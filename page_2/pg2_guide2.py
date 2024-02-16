@@ -136,4 +136,4 @@ def run_guide2():
                 
     except (ValueError, UnboundLocalError) as e:
         st.warning("Warning: unable to predict, make sure your file is correct")
-        st.error(f"Error: {e}")
+        
