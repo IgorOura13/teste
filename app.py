@@ -35,6 +35,36 @@ hide_streamlit_style2 = """
 st.markdown(hide_streamlit_style2, unsafe_allow_html=True)
 
 # Username and Password Authentication
+import streamlit_authenticator as stauth
+
+names = st.secrets["names"]
+usernames = st.secrets["usernames"]
+passwords = st.secrets["passwords"]
+
+hashed_passwords = stauth.Hasher(passwords).generate()
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+          st.write(' ')
+          
+with col2:
+
+          authenticator = stauth.Authenticate(names,usernames,hashed_passwords,
+              'cookie-name','cookie-key', cookie_expiry_days=0)
+
+          name, authentication_status, username = authenticator.login('Login','main')
+ 
+
+if st.session_state['authentication_status']:
+    st.sidebar.write("")
+    st.sidebar.write("")
+    st.sidebar.write("")
+    st.sidebar.write("")
+    st.sidebar.write("")
+
+    authenticator.logout('Logout', 'sidebar')
+
 
 
 
