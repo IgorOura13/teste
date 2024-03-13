@@ -62,7 +62,7 @@ if st.session_state['authentication_status']:
      st.sidebar.write("")
      st.sidebar.write("")
 
-    authenticator.logout('Logout', 'sidebar')
+     authenticator.logout('Logout', 'sidebar')
      # Sidebar
      st.sidebar.image("images/unilever-logo.png", use_column_width = 'auto')
      
