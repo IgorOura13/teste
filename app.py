@@ -8,7 +8,8 @@ from machine_learning_algorithm import dataframe, visc_path, proc_path
 from page_1.page1 import run_page1
 from page_2.page2 import run_page2
 from page_4.page4 import run_page4
-
+import streamlit_authenticator as stauth
+from streamlit_authenticator import hasher
 # Website's general configurations
 
 st.set_page_config(
@@ -36,7 +37,6 @@ hide_streamlit_style2 = """
 st.markdown(hide_streamlit_style2, unsafe_allow_html=True)
 
 # Username and Password Authentication
-import streamlit_authenticator as stauth
 
 names = ["Unilever", "Quanta"]
 usernames = ["unilever", "quanta"]
