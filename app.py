@@ -3,13 +3,13 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 from pathlib import Path
 import pickle
+from streamlit_authenticator import hasher
 # Internal libraries
 from machine_learning_algorithm import dataframe, visc_path, proc_path
 from page_1.page1 import run_page1
 from page_2.page2 import run_page2
 from page_4.page4 import run_page4
 import streamlit_authenticator as stauth
-from streamlit_authenticator import hasher
 # Website's general configurations
 
 st.set_page_config(
