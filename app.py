@@ -37,10 +37,13 @@ st.markdown(hide_streamlit_style2, unsafe_allow_html=True)
 # Username and Password Authentication
 import streamlit_authenticator as stauth
 
-names = st.secrets["names"]
-usernames = st.secrets["usernames"]
-passwords = st.secrets["passwords"]
+names = ["Unilever", "Quanta"]
+usernames = ["unilever", "quanta"]
 
+file_path = Path(__file__).parent / "hashed_pw.pkl"
+
+with file_path.open("rb") as file:
+    hashed_passwords = pickle.load(file)
 
 col1, col2, col3 = st.columns(3)
 
@@ -49,7 +52,7 @@ with col1:
           
 with col2:
 
-     authenticator = stauth.Authenticate(names,usernames,passwords,'cookie-name','cookie-key', cookie_expiry_days=0)
+     authenticator = stauth.Authenticate(names,usernames,hashed_passwords,'cookie-name','cookie-key', cookie_expiry_days=0)
 
      name, authentication_status, username = authenticator.login('Login','main')
  
