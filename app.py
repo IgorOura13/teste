@@ -1,7 +1,7 @@
 # External libraries
 import streamlit as st
 from streamlit_option_menu import option_menu
-import
+
 # Internal libraries
 from machine_learning_algorithm import dataframe, visc_path, proc_path
 from page_1.page1 import run_page1
