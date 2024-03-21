@@ -8,7 +8,7 @@ from machine_learning_algorithm import dataframe, visc_path, proc_path
 from page_1.page1 import run_page1
 from page_2.page2 import run_page2
 from page_4.page4 import run_page4
-import streamlit_authenticator as stauth
+import streamlit-authenticator as stauth
 # Website's general configurations
 
 st.set_page_config(
