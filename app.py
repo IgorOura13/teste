@@ -41,7 +41,7 @@ import streamlit_authenticator as stauth
 
 names = st.secrets["names"]
 usernames = st.secrets["usernames"]
-passwords = st.secrets["passwords"]
+
 
 hashed_passwords = open("hashed_pw.pkl", "rb").read()
 
