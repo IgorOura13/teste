@@ -52,7 +52,7 @@ with col1:
           
 with col2:
 
-     authenticator = stauth.Authenticate(names,usernames,hashed_passwords,
+     authenticator = stauth.Authenticate(names,usernames,passwords,
               'cookie-name','cookie-key', cookie_expiry_days=0)
 
      name, authentication_status, username = authenticator.login('Login','main')
