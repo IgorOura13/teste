@@ -8,8 +8,7 @@ from machine_learning_algorithm import dataframe, visc_path, proc_path
 from page_1.page1 import run_page1
 from page_2.page2 import run_page2
 from page_4.page4 import run_page4
-import streamlit_authenticator as stauth
-from streamlit_authenticator import Hasher
+
 # Website's general configurations
 
 st.set_page_config(
@@ -38,10 +37,13 @@ st.markdown(hide_streamlit_style2, unsafe_allow_html=True)
 
 # Username and Password Authentication
 
-names = ["Unilever", "Quanta"]
-usernames = ["unilever", "quanta"]
+import streamlit_authenticator as stauth
 
+names = st.secrets["names"]
+usernames = st.secrets["usernames"]
 passwords = st.secrets["passwords"]
+
+hashed_passwords = stauth.Hasher(passwords).generate()
 
 col1, col2, col3 = st.columns(3)
 
@@ -50,17 +52,19 @@ with col1:
           
 with col2:
 
-     authenticator = stauth.Authenticate(names,usernames,passwords,'cookie-name','cookie-key', cookie_expiry_days=0)
+     authenticator = stauth.Authenticate(names,usernames,hashed_passwords,
+              'cookie-name','cookie-key', cookie_expiry_days=0)
 
      name, authentication_status, username = authenticator.login('Login','main')
  
 
-if authentication_status:
+if st.session_state['authentication_status']:
      st.sidebar.write("")
      st.sidebar.write("")
      st.sidebar.write("")
      st.sidebar.write("")
      st.sidebar.write("")
+     
      authenticator.logout('Logout', 'sidebar')
      # Sidebar
      st.sidebar.image("images/unilever-logo.png", use_column_width = 'auto')
