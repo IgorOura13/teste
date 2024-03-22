@@ -55,7 +55,7 @@ with col2:
      authenticator = stauth.Authenticate(names,usernames,passwords,
               'cookie-name','cookie-key', cookie_expiry_days=0)
 
-     authenticator.login('Login','main',fields ={'Username': usernames, 'Password': passwords)
+     authenticator.login('Login','main',fields ={'Username': usernames, 'Password': passwords})
  
 
 if st.session_state['authentication_status']:
