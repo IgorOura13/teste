@@ -39,22 +39,23 @@ st.markdown(hide_streamlit_style2, unsafe_allow_html=True)
 
 import streamlit_authenticator as stauth
 
+print("oi")
 names = "Unilever"
 usernames = "unilever"
-
+print("oi")
 
 hashed_passwords = pickle.load(open("hashed_pw.pkl", "rb"))
-
+print("oi")
 col1, col2, col3 = st.columns(3)
-
+print("oi")
 with col1:
      st.write(' ')
           
 with col2:
-
+     print("oi")
      authenticator = stauth.Authenticate(names,usernames,hashed_passwords,
               'cookie-name','cookie-key', cookie_expiry_days=0)
-
+     print("oi")
      name, authentication_status, username = authenticator.login('Login','main')
  
 
