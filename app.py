@@ -43,7 +43,7 @@ names = st.secrets["names"]
 usernames = st.secrets["usernames"]
 passwords = st.secrets["passwords"]
 
-hashed_passwords = open("teste/hashed_pw.pkl", "rb").read()
+hashed_passwords = open("hashed_pw.pkl", "rb").read()
 
 col1, col2, col3 = st.columns(3)
 
