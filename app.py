@@ -43,8 +43,8 @@ names = st.secrets["names"]
 usernames = st.secrets["usernames"]
 passwords = st.secrets["passwords"]
 
-hashed_passwords = stauth.Hasher(passwords).generate()
-print(hashed_passwords)
+hashed_passwords = open("teste/hashed_pw.pkl", "rb").read()
+
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -52,10 +52,10 @@ with col1:
           
 with col2:
 
-     authenticator = stauth.Authenticate(names,usernames,passwords,
+     authenticator = stauth.Authenticate(names,usernames,hashed_passwords,
               'cookie-name','cookie-key', cookie_expiry_days=0)
 
-     authenticator.login('Login','main')
+     name, authentication_status, username = authenticator.login('Login','main')
  
 
 if st.session_state['authentication_status']:
