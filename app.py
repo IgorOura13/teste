@@ -44,7 +44,7 @@ usernames = st.secrets["usernames"]
 passwords = st.secrets["passwords"]
 
 hashed_passwords = stauth.Hasher(passwords).generate()
-
+print(hashed_passwords)
 col1, col2, col3 = st.columns(3)
 
 with col1:
