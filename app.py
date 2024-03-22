@@ -55,7 +55,7 @@ with col2:
      name, authentication_status, username = authenticator.login('Login','main')
  
 
-if st.session_state['authentication_status']:
+if authentication_status:
      st.sidebar.write("")
      st.sidebar.write("")
      st.sidebar.write("")
@@ -99,7 +99,7 @@ if st.session_state['authentication_status']:
      
           run_page4()
 
-elif st.session_state['authentication_status'] == False:
+elif authentication_status == False:
 
      col4, col5, col6 = st.columns(3)
      
@@ -108,7 +108,7 @@ elif st.session_state['authentication_status'] == False:
      with col5:
           st.error('Username/password is incorrect')
 
-elif st.session_state['authentication_status'] == None:
+elif authentication_status == None:
 
      col7, col8, col9 = st.columns(3)
      
