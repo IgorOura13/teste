@@ -9,7 +9,7 @@ from page_1.page1 import run_page1
 from page_2.page2 import run_page2
 from page_4.page4 import run_page4
 import streamlit_authenticator as stauth
-from streamlit_authenticator import hasher
+from streamlit_authenticator import Hasher
 # Website's general configurations
 
 st.set_page_config(
@@ -42,6 +42,7 @@ names = ["Unilever", "Quanta"]
 usernames = ["unilever", "quanta"]
 
 file_path = Path(__file__).parent / "hashed_pw.pkl"
+
 
 with file_path.open("rb") as file:
     hashed_passwords = pickle.load(file)
