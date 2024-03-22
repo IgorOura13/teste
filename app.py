@@ -40,8 +40,8 @@ st.markdown(hide_streamlit_style2, unsafe_allow_html=True)
 import streamlit_authenticator as stauth
 
 
-names = ["Peter Parker", "Rebecca Miller"]
-usernames = ["pparker", "rmiller"]
+names = ["Unilever", "Quanta"]
+usernames = ["unilever", "quanta"]
 
 
 hashed_passwords = pickle.load(open("hashed_pw.pkl", "rb"))
