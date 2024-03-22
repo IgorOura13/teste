@@ -103,7 +103,7 @@ if st.session_state['authentication_status']:
      
           run_page4()
 
-elif authentication_status == False:
+elif st.session_state['authentication_status'] == False:
 
      col4, col5, col6 = st.columns(3)
      
@@ -112,7 +112,7 @@ elif authentication_status == False:
      with col5:
           st.error('Username/password is incorrect')
 
-elif authentication_status == None:
+elif st.session_state['authentication_status'] == None:
 
      col7, col8, col9 = st.columns(3)
      
