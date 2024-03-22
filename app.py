@@ -43,7 +43,7 @@ names = st.secrets["names"]
 usernames = st.secrets["usernames"]
 
 
-hashed_passwords = open("hashed_pw.pkl", "rb").read()
+hashed_passwords = pickle.load(open("hashed_pw.pkl", "rb"))
 
 col1, col2, col3 = st.columns(3)
 
